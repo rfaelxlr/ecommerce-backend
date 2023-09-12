@@ -33,15 +33,7 @@ public class Product extends Base {
     private String ean;
     private BigDecimal price;
 
-    @PrePersist
-    protected void onCreate() {
-        setCreationDate(LocalDateTime.now());
-    }
 
-    @PreUpdate
-    protected void onUpdate() {
-        setModifiedDate(LocalDateTime.now());
-    }
 
     public void update(UpdateProductRequest request) {
         Optional.ofNullable(request.getName()).ifPresent(this::setName);
