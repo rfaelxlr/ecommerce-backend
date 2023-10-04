@@ -4,6 +4,7 @@ import com.ecommerce.controller.vo.CreateUpdateCategoryRequest;
 import com.ecommerce.controller.vo.UpdateProductRequest;
 import com.ecommerce.domain.Category;
 import com.ecommerce.domain.Product;
+import com.ecommerce.exception.NotFoundException;
 import com.ecommerce.repository.CategoryRepository;
 import com.ecommerce.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class CategoryService {
     }
 
     public Category getCategory(Long categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not Found!"));
+        return categoryRepository.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not Found!"));
     }
 
     public Category updateCategory(Long categoryId, CreateUpdateCategoryRequest request) {

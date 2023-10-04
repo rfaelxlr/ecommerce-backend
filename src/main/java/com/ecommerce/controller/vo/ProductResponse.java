@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductResponse {
-    private String id;
+    private Long id;
     private String name;
     private String ean;
     private BigDecimal price;
