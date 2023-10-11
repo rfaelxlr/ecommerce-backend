@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ErrorMessage {
     private String path;
-    private String message;
+    private Object message;
     private int status;
     private LocalDateTime timestamp;
 }
