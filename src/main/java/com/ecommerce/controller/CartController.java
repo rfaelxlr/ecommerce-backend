@@ -1,6 +1,7 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.controller.vo.CartAddProduct;
+import com.ecommerce.domain.Cart;
 import com.ecommerce.service.CartService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/carts")
 @AllArgsConstructor
@@ -19,11 +22,13 @@ public class CartController {
 
     @PostMapping
     public ResponseEntity<?> createCart() {
-        return ResponseEntity.ok(cartService.createCart());
+        Cart cart = cartService.createCart();
+        return ResponseEntity.created(URI.create("/carts/" + cart.getId()))
+                .body(cart);
     }
 
     @PostMapping("/{cartId}")
-    public ResponseEntity<?> addProduct(@PathVariable Long cartId, @RequestBody @Valid CartAddProduct request){
+    public ResponseEntity<?> addProduct(@PathVariable Long cartId, @RequestBody @Valid CartAddProduct request) {
         return ResponseEntity.ok(cartService.addProduct(cartId, request));
     }
 }
