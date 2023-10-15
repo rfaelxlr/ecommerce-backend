@@ -1,8 +1,10 @@
 package com.ecommerce.service;
 
 import com.ecommerce.controller.vo.CartAddProduct;
+import com.ecommerce.controller.vo.CreateCartRequest;
 import com.ecommerce.domain.Cart;
 import com.ecommerce.domain.Product;
+import com.ecommerce.domain.Store;
 import com.ecommerce.exception.NotFoundException;
 import com.ecommerce.factory.CartFactory;
 import com.ecommerce.repository.CartItemRepository;
@@ -18,13 +20,15 @@ public class CartService {
     private final CartFactory cartFactory;
     private final CartItemRepository cartItemRepository;
     private final ProductService productService;
+    private final StoreService storeService;
 
     public Cart findById(Long cartId) {
         return cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not Found!"));
     }
 
-    public Cart createCart() {
-        return cartRepository.save(cartFactory.createEmptyCart());
+    public Cart createCart(CreateCartRequest request) {
+        Store store = storeService.getActiveStore(request.getStoreId());
+        return cartRepository.save(cartFactory.createEmptyCart(store));
     }
 
     public Cart addProduct(Long cartId, CartAddProduct request) {
