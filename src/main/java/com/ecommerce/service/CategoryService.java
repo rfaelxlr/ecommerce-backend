@@ -1,12 +1,9 @@
 package com.ecommerce.service;
 
 import com.ecommerce.controller.vo.CreateUpdateCategoryRequest;
-import com.ecommerce.controller.vo.UpdateProductRequest;
 import com.ecommerce.domain.Category;
-import com.ecommerce.domain.Product;
 import com.ecommerce.exception.NotFoundException;
 import com.ecommerce.repository.CategoryRepository;
-import com.ecommerce.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

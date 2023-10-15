@@ -16,11 +16,14 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
     private final OrderFactory orderFactory;
+    private final PaymentService paymentService;
 
     public Order createOrder(CreateOrderRequest request) {
         Cart cart = cartService.findById(request.getCartId());
         Order order = orderFactory.createNewOrder(cart);
-        return orderRepository.save(order);
+        orderRepository.save(order);
+        paymentService.createPayment(request,order);
+        return order;
     }
 
     public List<Order> getOrders() {

@@ -3,6 +3,7 @@ package com.ecommerce.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -43,6 +44,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     ErrorMessage onNotFoundException(NotFoundException e, HttpServletRequest request) {
         return new ErrorMessage(request.getServletPath(), e.getMessage(), HttpStatus.NOT_FOUND.value(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    ErrorMessage onHttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        return new ErrorMessage(request.getServletPath(), e.getMessage(), HttpStatus.BAD_REQUEST.value(), LocalDateTime.now());
     }
 
 }
