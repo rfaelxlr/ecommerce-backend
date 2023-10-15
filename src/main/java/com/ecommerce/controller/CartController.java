@@ -32,4 +32,9 @@ public class CartController {
     public ResponseEntity<?> addProduct(@PathVariable Long cartId, @RequestBody @Valid CartAddProduct request) {
         return ResponseEntity.ok(cartService.addProduct(cartId, request));
     }
+
+    @PostMapping("/{cartId}/km/{km}")
+    public ResponseEntity<?> setShipmentCost(@PathVariable Long cartId, @PathVariable Double km) {
+        return ResponseEntity.ok(cartService.setShipmentCost(km, cartId));
+    }
 }

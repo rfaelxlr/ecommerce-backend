@@ -53,4 +53,11 @@ public class GlobalExceptionHandler {
         return new ErrorMessage(request.getServletPath(), e.getMessage(), HttpStatus.BAD_REQUEST.value(), LocalDateTime.now());
     }
 
+    @ExceptionHandler(DeliveryAreaException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    ErrorMessage onDeliveryAreaException(DeliveryAreaException e, HttpServletRequest request) {
+        return new ErrorMessage(request.getServletPath(), e.getMessage(), HttpStatus.CONFLICT.value(), LocalDateTime.now());
+    }
+
 }

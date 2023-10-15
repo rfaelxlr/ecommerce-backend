@@ -12,6 +12,8 @@ import com.ecommerce.repository.CartRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @AllArgsConstructor
 public class CartService {
@@ -39,4 +41,12 @@ public class CartService {
         cartRepository.save(cart);
         return cart;
     }
+
+    public Cart setShipmentCost(Double km, Long cartId) {
+        Cart cart = findById(cartId);
+        BigDecimal shipmentCost = storeService.getShipmentCost(km, cart.getStore());
+        cart.setShipmentCost(shipmentCost);
+        return cartRepository.save(cart);
+    }
+
 }
