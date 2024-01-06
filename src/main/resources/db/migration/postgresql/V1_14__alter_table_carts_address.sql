@@ -1,0 +1,5 @@
+ALTER TABLE carts
+ADD COLUMN address_id BIGINT;
+
+
+ALTER TABLE carts ADD CONSTRAINT FK_CARTS_ON_ADDRESS FOREIGN KEY (address_id) REFERENCES addresses (id);

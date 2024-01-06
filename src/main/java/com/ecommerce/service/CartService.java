@@ -2,10 +2,13 @@ package com.ecommerce.service;
 
 import com.ecommerce.controller.vo.CartAddProduct;
 import com.ecommerce.controller.vo.CreateCartRequest;
+import com.ecommerce.domain.Address;
 import com.ecommerce.domain.Cart;
+import com.ecommerce.domain.Customer;
 import com.ecommerce.domain.Product;
 import com.ecommerce.domain.Store;
 import com.ecommerce.exception.NotFoundException;
+import com.ecommerce.factory.AddressFactory;
 import com.ecommerce.factory.CartFactory;
 import com.ecommerce.repository.CartItemRepository;
 import com.ecommerce.repository.CartRepository;
@@ -23,14 +26,16 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final ProductService productService;
     private final StoreService storeService;
+    private final CustomerService customerService;
 
     public Cart findById(Long cartId) {
         return cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not Found!"));
     }
 
-    public Cart createCart(CreateCartRequest request) {
+    public Cart createCart(CreateCartRequest request, Long customerId) {
         Store store = storeService.getActiveStore(request.getStoreId());
-        return cartRepository.save(cartFactory.createEmptyCart(store));
+        Customer customer= customerService.getCustomer(customerId);
+        return cartRepository.save(cartFactory.createEmptyCart(store,customer));
     }
 
     public Cart addProduct(Long cartId, CartAddProduct request) {
@@ -49,4 +54,10 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
+    public Cart setAddressToCart(Long cartId, Long addressId) {
+        Cart cart = findById(cartId);
+        Address address = customerService.getAddress(addressId, cart.getCustomer().getId());
+        cart.setAddress(address);
+        return cartRepository.save(cart);
+    }
 }

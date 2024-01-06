@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,9 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -41,6 +44,9 @@ public class Customer extends User {
     private boolean receiveEmails;
     private boolean receiveSms;
     private boolean receiveWhatsapp;
+
+    @OneToMany(mappedBy = "customer", orphanRemoval = true)
+    private Set<Address> addresses = new LinkedHashSet<>();
 
     public void update(UpdateCustomerRequest request) {
         Optional.ofNullable(request.getName()).ifPresent(this::setName);

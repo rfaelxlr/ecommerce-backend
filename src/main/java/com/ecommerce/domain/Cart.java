@@ -43,6 +43,14 @@ public class Cart extends Base {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     public void addProduct(Integer quantity, Product product) {
         Optional<CartItem> existingItem = cartItems.stream()
                 .filter(item -> item.getProduct().getId().equals(product.getId()))
