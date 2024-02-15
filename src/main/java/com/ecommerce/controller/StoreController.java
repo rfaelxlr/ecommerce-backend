@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.controller.swagger.StoreControllerSwagger;
 import com.ecommerce.controller.vo.CreateStoreRequest;
 import com.ecommerce.controller.vo.DeliveryAreaRequest;
 import com.ecommerce.controller.vo.UpdateDeliveryAreaRequest;
@@ -25,7 +26,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/stores")
 @AllArgsConstructor
-public class StoreController {
+public class StoreController implements StoreControllerSwagger {
     private final StoreService storeService;
     private final MapperUtil mapperUtil;
 
