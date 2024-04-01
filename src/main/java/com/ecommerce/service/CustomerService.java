@@ -2,6 +2,7 @@ package com.ecommerce.service;
 
 import com.ecommerce.controller.vo.CreateAddressCustomerRequest;
 import com.ecommerce.controller.vo.CreateCustomerRequest;
+import com.ecommerce.controller.vo.PasswordRecoverCodeRequest;
 import com.ecommerce.controller.vo.UpdateAddressCustomerRequest;
 import com.ecommerce.controller.vo.UpdateCustomerRequest;
 import com.ecommerce.domain.Address;
@@ -20,6 +21,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerFactory customerFactory;
     private final AddressService addressService;
+    private final EmailService emailService;
 
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
@@ -58,5 +60,9 @@ public class CustomerService {
     public Address updateAddress(Long addressId, Long customerId, UpdateAddressCustomerRequest request) {
         Customer customer = getCustomer(customerId);
         return addressService.updateAddress(addressId,customer.getId(), request);
+    }
+
+    public void sendConfirmationCode(PasswordRecoverCodeRequest request) {
+        emailService.passwordRecoverCode(request.getEmail());
     }
 }

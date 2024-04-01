@@ -2,6 +2,7 @@ package com.ecommerce.controller;
 
 import com.ecommerce.controller.vo.CreateAddressCustomerRequest;
 import com.ecommerce.controller.vo.CreateCustomerRequest;
+import com.ecommerce.controller.vo.PasswordRecoverCodeRequest;
 import com.ecommerce.controller.vo.UpdateAddressCustomerRequest;
 import com.ecommerce.controller.vo.UpdateCustomerRequest;
 import com.ecommerce.domain.Address;
@@ -66,5 +67,11 @@ public class CustomerController {
     @PatchMapping("/{customerId}/addresses/{addressId}")
     public ResponseEntity<?> updateAddress(@PathVariable Long customerId, @PathVariable Long addressId, @RequestBody UpdateAddressCustomerRequest request) {
         return ResponseEntity.ok(customerService.updateAddress(addressId,customerId, request));
+    }
+
+    @PostMapping("/password-recover")
+    public ResponseEntity<?> sendConfirmationCode(@RequestBody PasswordRecoverCodeRequest request){
+        customerService.sendConfirmationCode(request);
+        return ResponseEntity.accepted().build();
     }
 }
